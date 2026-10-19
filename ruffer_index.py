@@ -11,8 +11,8 @@ class FirstScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
 
-        layout = FloatLayout()
-        self.add_widget(layout)
+        self.screen_layout = FloatLayout()
+        self.add_widget(self.screen_layout)
 
         text_label = Label(
             text = 'This allows us to \n' \
@@ -25,9 +25,9 @@ class FirstScreen(Screen):
             }
         )
 
-        layout.add_widget(text_label)
+        self.screen_layout.add_widget(text_label)
 
-        name_label = Label(
+        self.name_label = Label(
             text = 'Enter your name:',
             pos_hint={
                 'center_x': 0.25,
@@ -35,7 +35,7 @@ class FirstScreen(Screen):
             }
         )
 
-        age_label = Label(
+        self.age_label = Label(
             text = 'Enter your age:',
             pos_hint={
                 'center_x': 0.25,
@@ -43,17 +43,17 @@ class FirstScreen(Screen):
             }   
         )
 
-        layout.add_widget(name_label)
-        layout.add_widget(age_label)
+        self.screen_layout.add_widget(self.name_label)
+        self.screen_layout.add_widget(self.age_label)
 
-        name_input = TextInput(
+        self.name_input = TextInput(
             size_hint = (0.3, 0.05),
             pos_hint = {
                 'center_x': 0.6,
                 'center_y': 0.35
             }
         )
-        age_input = TextInput(
+        self.age_input = TextInput(
             size_hint = (0.3, 0.05),
             pos_hint = {
                 'center_x': 0.6,
@@ -61,8 +61,8 @@ class FirstScreen(Screen):
             }
         )
 
-        layout.add_widget(name_input)
-        layout.add_widget(age_input)
+        self.screen_layout.add_widget(self.name_input)
+        self.screen_layout.add_widget(self.age_input)
 
         btn = Button(
             text = 'Continue',
@@ -75,7 +75,7 @@ class FirstScreen(Screen):
 
         btn.on_press = self.save_and_continue
 
-        layout.add_widget(btn)
+        self.screen_layout.add_widget(btn)
 
       
 
