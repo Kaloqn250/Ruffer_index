@@ -152,23 +152,292 @@ class FirstScreen(Screen):
 
 # Създаваме втория екран.
 # Засега той е празен, защото класът няма допълнителна логика.
+# Създаваме клас за втория екран.
 class SecondScreen(Screen):
-    pass
+
+    # Методът се изпълнява при създаването на екрана.
+    def __init__(self, **kw):
+
+        # Извикваме конструктора на родителския клас Screen.
+        super().__init__(**kw)
+
+        # Създаваме FloatLayout, в който ще поставим елементите.
+        layout = FloatLayout()
+
+        # Създаваме Label с инструкции към потребителя.
+        text1 = Label(
+            text='Mesure your pulse for 15 seconds \n'
+                 'Write the result in the box bellow.',
+
+            # Поставяме текста в центъра на екрана.
+            pos_hint={
+                'center_x': 0.5,
+                'center_y': 0.5
+            }
+        )
+
+        # Създаваме Label, който указва какво трябва да се въведе.
+        text2 = Label(
+            text='Enter the result: ',
+            pos_hint={
+                'center_x': 0.3,
+                'center_y': 0.3
+            }
+        )
+
+        # Създаваме поле за въвеждане на първия резултат от измерването.
+        self.pulse_input = TextInput(
+            size_hint=(0.3, 0.05),
+            pos_hint={
+                'center_x': 0.6,
+                'center_y': 0.3
+            }
+        )
+
+        # Създаваме бутон за преминаване към следващия екран.
+        btn = Button(
+            text='Continue',
+            size_hint=(0.3, 0.15),
+            pos_hint={
+                'center_x': 0.5,
+                'center_y': 0.1
+            }
+        )
+
+        # Свързваме бутона с метода, който запазва резултата
+        # и отваря третия екран.
+        btn.on_press = self.save_and_continue
+
+        # Добавяме всички елементи към оформлението.
+        layout.add_widget(text1)
+        layout.add_widget(text2)
+        layout.add_widget(self.pulse_input)
+        layout.add_widget(btn)
+
+        # Добавяме цялото оформление към текущия екран.
+        self.add_widget(layout)
+
+    # Методът се изпълнява при натискане на бутона.
+    def save_and_continue(self):
+
+        # Взимаме въведения текст от полето и го запазваме
+        # в общия речник results под ключа 'first_measure'.
+        results['first_measure'] = self.pulse_input.text
+
+        # Преминаваме към екрана с име 'third'.
+        self.manager.current = 'third'
 
 
 # Създаваме третия екран.
+# Създаваме клас за третия екран.
 class ThirdScreen(Screen):
-    pass
 
+    def __init__(self, **kw):
 
+        # Извикваме конструктора на Screen.
+        super().__init__(**kw)
+
+        # Създаваме оформление за елементите.
+        layout = FloatLayout()
+
+        # Показваме инструкция за изпълнение на физическото упражнение.
+        label = Label(text='Do 30 squats in 45 seconds')
+
+        # Създаваме бутон за продължаване.
+        btn = Button(
+            text='Continue',
+            size_hint=(0.3, 0.15),
+            pos_hint={
+                'center_x': 0.5,
+                'center_y': 0.1
+            }
+        )
+
+        # При натискане на бутона ще се извика методът btn_continue.
+        btn.on_press = self.btn_continue
+
+        # Добавяме текста и бутона към оформлението.
+        layout.add_widget(label)
+        layout.add_widget(btn)
+
+        # Добавяме оформлението към екрана.
+        self.add_widget(layout)
+
+    # Метод за преминаване към четвъртия екран.
+    def btn_continue(self):
+
+        # Показваме екрана с име 'fourth'.
+        self.manager.current = 'fourth'
+
+#00000
 # Създаваме четвъртия екран.
+# Създаваме клас за четвъртия екран.
 class FourthScreen(Screen):
-    pass
+
+    def __init__(self, **kw):
+
+        # Извикваме конструктора на родителския клас.
+        super().__init__(**kw)
+
+        # Създаваме оформление за елементите.
+        layout = FloatLayout()
+
+        # Създаваме текст с инструкции за двете измервания.
+        text = Label(
+            text='Measure your pulse twice in the next minute \n'
+                 'during the first 15 seconds, and in the last 15 seconds \n'
+                 'Write the results below'
+        )
+
+        # Създаваме етикет за първото измерване след кляканията.
+        result_1 = Label(
+            text='First result: ',
+            pos_hint={
+                'center_x': 0.25,
+                'center_y': 0.35
+            }
+        )
+
+        # Създаваме етикет за второто измерване след кляканията.
+        result_2 = Label(
+            text='Second result: ',
+            pos_hint={
+                'center_x': 0.25,
+                'center_y': 0.25
+            }
+        )
+
+        # Създаваме поле за въвеждане на първия резултат.
+        self.res_1_input = TextInput(
+            size_hint=(0.3, 0.05),
+            pos_hint={
+                'center_x': 0.6,
+                'center_y': 0.35
+            }
+        )
+
+        # Създаваме поле за въвеждане на втория резултат.
+        self.res_2_input = TextInput(
+            size_hint=(0.3, 0.05),
+            pos_hint={
+                'center_x': 0.6,
+                'center_y': 0.25
+            }
+        )
+
+        # Създаваме бутон за преминаване към последния екран.
+        btn = Button(
+            text='Continue',
+            size_hint=(0.3, 0.15),
+            pos_hint={
+                'center_x': 0.5,
+                'center_y': 0.1
+            }
+        )
+
+        # Свързваме бутона с метода за запазване на резултатите.
+        btn.on_press = self.save_and_continue
+
+        # Добавяме елементите към оформлението.
+        layout.add_widget(text)
+        layout.add_widget(result_1)
+        layout.add_widget(result_2)
+        layout.add_widget(self.res_1_input)
+        layout.add_widget(self.res_2_input)
+        layout.add_widget(btn)
+
+        # Добавяме оформлението към екрана.
+        self.add_widget(layout)
+
+    # Метод, който се изпълнява при натискане на бутона.
+    def save_and_continue(self):
+
+        # Запазваме първия резултат в общия речник.
+        results['second_measure'] = self.res_1_input.text
+
+        # Запазваме втория резултат в общия речник.
+        results['third_measure'] = self.res_2_input.text
+
+        # Извеждаме всички запазени данни в конзолата.
+        print(results.items())
+
+        # Преминаваме към петия екран.
+        self.manager.current = 'fifth'
 
 
 # Създаваме петия екран.
+# Създаваме клас за петия екран.
 class FifthScreen(Screen):
-    pass
+
+    def __init__(self, **kw):
+
+        # Извикваме конструктора на Screen.
+        super().__init__(**kw)
+
+        # Създаваме оформление за резултатите.
+        layout = FloatLayout()
+
+        # Създаваме празен Label, в който по-късно ще покажем резултата.
+        self.result_label = Label(text='')
+
+        # Добавяме етикета към оформлението.
+        layout.add_widget(self.result_label)
+
+        # Добавяме оформлението към екрана.
+        self.add_widget(layout)
+
+    # Този метод се извиква непосредствено преди показването на екрана.
+    def on_pre_enter(self, *args):
+
+        # Извикваме метода, който изчислява и показва резултатите.
+        self.show_results()
+
+    # Метод за изчисляване на индекса и показване на информацията.
+    def show_results(self):
+
+        # Взимаме първото измерване от речника и го преобразуваме
+        # от текст в цяло число.
+        p1 = int(results['first_measure'])
+
+        # Взимаме второто измерване и го преобразуваме в цяло число.
+        p2 = int(results['second_measure'])
+
+        # Взимаме третото измерване и го преобразуваме в цяло число.
+        p3 = int(results['third_measure'])
+
+        # Изчисляваме индекса на Руфие по формулата.
+        index = (4 * (p1 + p2 + p3) - 200) / 10
+
+        # Създаваме празен текст, в който ще запишем оценката.
+        text = ''
+
+        # Проверяваме стойността на индекса.
+        if index <= 3:
+            text = 'Perfect condition'
+
+        # Ако първото условие не е изпълнено, проверяваме следващото.
+        elif index <= 6:
+            text = 'Good condition'
+
+        # Проверяваме дали индексът е до 9.
+        elif index <= 9:
+            text = 'Not the best you can have'
+
+        # Проверяваме дали индексът е до 14.
+        elif index <= 14:
+            text = 'Not very good condition'
+
+        # Ако никое от горните условия не е изпълнено.
+        else:
+            text = 'Go to see a doctor'
+
+        # Показваме името, възрастта и оценката в Label.
+        self.result_label.text = (
+            f"Name: {results.get('name')}\n"
+            f"Age: {results['age']}\n"
+            f"Ruffier Index: {index:.2f}\n"
+            f"Result from the test: {text}"
+        )
 
 
 # Създаваме главния клас на приложението.
